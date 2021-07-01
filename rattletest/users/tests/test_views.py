@@ -11,11 +11,7 @@ from django.urls import reverse
 from rattletest.users.forms import UserChangeForm
 from rattletest.users.models import User
 from rattletest.users.tests.factories import UserFactory
-from rattletest.users.views import (
-    UserRedirectView,
-    UserUpdateView,
-    user_detail_view,
-)
+from rattletest.users.views import UserRedirectView, UserUpdateView, user_detail_view
 
 pytestmark = pytest.mark.django_db
 

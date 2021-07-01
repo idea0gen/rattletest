@@ -1,5 +1,5 @@
 from .base import *  # noqa
-from .base import env
+from .base import ROOT_DIR, env
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -79,8 +79,8 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         "APP": {
-            "client_id": env("GITHUB_CLIENT_ID"),
-            "secret": env("GITHUB_CLIENT_SECRET"),
+            "client_id": env("CLIENT_ID_GITHUB"),
+            "secret": env("CLIENT_SECRET_GITHUB"),
             "key": "",
         },
         # 'SCOPE': {
@@ -94,8 +94,8 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         "APP": {
-            "client_id": env("GITLAB_CLIENT_ID"),
-            "secret": env("GITLAB_CLIENT_SECRET"),
+            "client_id": env("CLIENT_ID_GITLAB"),
+            "secret": env("CLIENT_SECRET_GITLAB"),
             "key": "",
         }
     },

@@ -1,7 +1,8 @@
-from django.apps import AppConfig
-from django.utils.translation import gettext_lazy as _
 from allauth.account.apps import AccountConfig
 from allauth.socialaccount.apps import SocialAccountConfig
+from django.apps import AppConfig
+from django.utils.translation import gettext_lazy as _
+
 
 class UsersConfig(AppConfig):
     name = "rattletest.users"
@@ -15,7 +16,8 @@ class UsersConfig(AppConfig):
 
 
 class ModifiedAccountConfig(AccountConfig):
-    default_auto_field = 'django.db.models.AutoField'
+    default_auto_field = "django.db.models.AutoField"
+
 
 class ModifiedSocialAccountConfig(SocialAccountConfig):
-    default_auto_field = 'django.db.models.AutoField'
+    default_auto_field = "django.db.models.AutoField"

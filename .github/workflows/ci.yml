@@ -49,6 +49,12 @@ jobs:
     env:
       # postgres://user:password@host:port/database
       DATABASE_URL: "postgres://postgres:postgres@localhost:5432/postgres"
+      DJANGO_SECRET_KEY: ${{secrets.DJANGO_SECRET_KEY}}
+      CLIENT_SECRET_GITHUB: ${{secrets.CLIENT_SECRET_GITHUB}}
+      CLIENT_ID_GITHUB: ${{secrets.CLIENT_ID_GITHUB}}
+      CLIENT_ID_GITLAB: ${{secrets.CLIENT_ID_GITLAB}}
+      CLIENT_SECRET_GITLAB: ${{secrets.CLIENT_SECRET_GITLAB}}
+      DJANGO_DEFAULT_FROM_EMAIL: ${{secrets.DJANGO_DEFAULT_FROM_EMAIL}}
 
     steps:
 

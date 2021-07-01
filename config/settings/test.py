@@ -2,17 +2,15 @@
 With these settings, tests run faster.
 """
 
-from config.settings.local import ALLOWED_HOSTS
+# from config.settings.local import ALLOWED_HOSTS
+
 from .base import *  # noqa
-from .base import env
+from .base import ROOT_DIR, env
 
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = env(
-    "DJANGO_SECRET_KEY",
-    default="B7TBWUz8MFS6QaXGg00MsbLbZgxEcVmtxOB0DU7iCgShaPgzb3TWQldkLyP7yOKn",
-)
+SECRET_KEY = env("DJANGO_SECRET_KEY")
 # https://docs.djangoproject.com/en/dev/ref/settings/#test-runner
 TEST_RUNNER = "django.test.runner.DiscoverRunner"
 

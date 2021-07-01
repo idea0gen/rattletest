@@ -4,9 +4,7 @@ Base settings to build other settings files upon.
 from pathlib import Path
 
 import environ
-# from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import gettext_lazy as _
-
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # rattletest/
@@ -277,8 +275,8 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         "APP": {
-            "client_id": env("GITHUB_CLIENT_ID"),
-            "secret": env("GITHUB_CLIENT_SECRET"),
+            "client_id": env("CLIENT_ID_GITHUB"),
+            "secret": env("CLIENT_SECRET_GITHUB"),
             "key": "",
         },
         # 'SCOPE': {
@@ -292,17 +290,14 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         "APP": {
-            "client_id": env("GITLAB_CLIENT_ID"),
-            "secret": env("GITLAB_CLIENT_SECRET"),
+            "client_id": env("CLIENT_ID_GITHUB"),
+            "secret": env("CLIENT_SECRET_GITLAB"),
             "key": "",
         }
     },
 }
 
 
-LANGUAGES = [
-   ('mr', _('Marathi')),
-   ('en-us', _('English'))
-]
+LANGUAGES = [("mr", _("Marathi")), ("en-us", _("English"))]
 # https://github.com/pennersr/django-allauth/issues/2826#issuecomment-814458447
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
