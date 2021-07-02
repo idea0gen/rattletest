@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Create Project{% endblock %}
+
+{% block content %}
+  <section class="section">
+    <div class="columns container-fluid">
+      <div class="col-md-12 offset-md-2">
+        <h4 class="has-text-centered"><strong>New Project</strong></h4>
+        <form class="form" method="POST">
+        {% csrf_token %}
+            <div class="tab-content mt-6">
+                <div class="tab-pane active" id="common" role="tabpanel">
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="required" for="inputName">Project name</label>
+                        <input type="text" name="name" id="inputName" class="form-control" placeholder="For example: Web Application" required="" autofocus="" value="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-3">
+                      <div class="form-group">
+                        <label class="required" for="id_project_code">Project Code
+                          <span aria-label="Code is short name of your project. It should be from 2 to 10 letters. Only latin characters and numbers are allowed." data-balloon-pos="up" class="tooltip-extra-right">
+                            <i class="fas fa-question-circle"></i>
+                          </span>
+                        </label>
+                        <input maxlength="6" type="text" name="project_code" id="id_project_code" class="form-control" placeholder="For example: WA" required="" value="">
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label for="id_description">Description</label>
+                        <textarea class="form-control" name="description" id="id_description" rows="4" placeholder="Write a few sentences about your project"></textarea>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <button class="btn btn-primary btn-sm" type="submit">Create project</button>
+                </div>
+            </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
