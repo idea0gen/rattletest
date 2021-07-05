@@ -75,6 +75,7 @@ LOCAL_APPS = [
     "rattletest.users.apps.ModifiedAccountConfig",
     "rattletest.users.apps.ModifiedSocialAccountConfig",
     "projects",
+    "testcases",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
