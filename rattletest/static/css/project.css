@@ -1,5 +1,27 @@
 /* These styles are generated from project.scss. */
 
+body {
+  font-size: 0.90rem;
+  line-height: 1;
+}
+
+label {
+  font-weight: 500;
+}
+
+
+.btn-primary-custom {
+  color: #fff;
+  background-color: #851fe4d0;
+  border-color: #851fe4d0;
+}
+
+.btn-danger-custom {
+  color: #fff;
+  background-color: #f10808d0;
+  border-color: #f10808d0;
+}
+
 .alert-debug {
   color: black;
   background-color: white;

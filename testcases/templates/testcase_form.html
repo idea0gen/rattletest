@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block title %}Create Testcase{% endblock %}
+
+{% block content %}
+  <section class="section">
+    <div class="columns container-fluid">
+      <div class="col-md-12 offset-md-1">
+        <h4 class="has-text-centered"><strong>New Testcase</strong></h4>
+        <form class="form" method="POST">
+        {% csrf_token %}
+            <div class="tab-content mt-6">
+                <div class="tab-pane active" id="common" role="tabpanel">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="required" for="id_title">Test Case Title</label>
+                        <input type="text" name="title" id="id_title" class="form-control form-control-sm" placeholder="For example: Authorization" required="" autofocus="" value="{{object.title}}">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="required" for="id_project">Project</label>
+                        <select class="form-select form-select-sm form-control form-control-sm" name="project" id="id_project" aria-label=".form-select-sm example" required="">
+                            {%for project in form.project %}{{project}}{%endfor%}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-10">
+                      <div class="form-group">
+                        <label class="id_description">Description</label>
+                        <textarea class="form-control form-control-sm" name="description" id="id_description" rows="2" placeholder="Write a few sentences about your project">{{object.description}}</textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="required" for="id_status">Status</label>
+                        <select class="form-select form-select-sm form-control form-control-sm" name="status" id="id_status" aria-label=".form-select-sm example">
+                            {% for a in form.status %}
+                            {{a}}
+                            {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="required" for="id_severity">Severity</label>
+                        <select class="form-select form-select-sm form-control form-control-sm" name="severity" id="id_severity" aria-label=".form-select-sm example">
+                            {% for a in form.severity %}
+                            {{a}}
+                            {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="required" for="id_priority">Priority</label>
+                        <select class="form-select form-select-sm form-control form-control-sm" name="priority" id="id_priority" aria-label=".form-select-sm example">
+                            {% for a in form.priority %}
+                            {{a}}
+                            {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="required" for="id_testcase_type">Test Case Type</label>
+                        <select class="form-select form-select-sm form-control form-control-sm" name="testcase_type" id="id_testcase_type" aria-label=".form-select-sm example">
+                            {% for a in form.testcase_type %}
+                            {{a}}
+                            {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                <div class="row">
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label class="required" for="id_pre_condition">Pre-Condition</label>
+                        <input type="text" name="pre_condition" id="id_pre_condition" class="form-control form-control-sm" placeholder="Pre-Condition"autofocus="" value="{{object.pre_condition}}">
+                      </div>
+                    </div>
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label class="required" for="id_post_condition">Pre-Condition</label>
+                        <input type="text" name="post_condition" id="id_post_condition" class="form-control form-control-sm" placeholder="Post-Condition"autofocus="" value="{{object.post_condition}}">
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col">
+                    <button class="btn btn-primary btn-sm" type="submit">
+                    {% if "create" in request.path_info %}Create{% else %}Update{% endif %}
+                    Testcase</button>
+                </div>
+            </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
