@@ -20,8 +20,6 @@ class ProjectCreate(LoginRequiredMixin, CreateView):
         return redirect("projects")
 
     def form_invalid(self, form):
-        print("Form is invalid")
-        print("Form Errors are Data is:", form.errors)
         return self.render_to_response(self.get_context_data(form=form))
 
 
@@ -47,7 +45,6 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
         return self.render_to_response(self.get_context_data(form=form))
 
     def get_success_message(self, cleaned_data):
-        print("cleaned_data is:", cleaned_data)
         name = cleaned_data["name"]
         return self.success_message % dict(
             {

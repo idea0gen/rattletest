@@ -4,4 +4,5 @@
     "python.formatting.provider": "black",
     "python.linting.pycodestyleEnabled": false,
     "python.linting.flake8Enabled": true,
+    "python.pythonPath": "c:\\Users\\10680057\\.pyenv\\pyenv-win\\versions\\3.9.4\\python.exe",
 }
