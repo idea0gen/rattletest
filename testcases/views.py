@@ -61,4 +61,4 @@ class TestCaseUpdateView(LoginRequiredMixin, UpdateView):
     ]
     template_name = "testcase_form.html"
     success_message = "Test Case was updated successfully"
-    success_url = "/testcase"
+    success_url = "/project"
