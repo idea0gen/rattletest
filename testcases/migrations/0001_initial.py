@@ -11,36 +11,114 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('projects', '0001_initial'),
+        ("projects", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='TestCaseType',
+            name="TestCaseType",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('type', models.CharField(max_length=100)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("type", models.CharField(max_length=100)),
             ],
         ),
         migrations.CreateModel(
-            name='TestCase',
+            name="TestCase",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=255)),
-                ('description', models.TextField(blank=True, null=True)),
-                ('status', models.IntegerField(blank=True, choices=[(99, 'Not Set'), (10, 'Draft'), (20, 'In Review'), (30, 'Final')], default=99, null=True)),
-                ('severity', models.IntegerField(blank=True, choices=[(99, 'Not Set'), (10, 'Trivial'), (20, 'Minor'), (30, 'Normal'), (40, 'Major'), (50, 'Critical')], default=99, null=True)),
-                ('priority', models.IntegerField(blank=True, choices=[(99, 'Not Set'), (10, 'Low'), (20, 'Medium'), (30, 'High')], default=99, null=True)),
-                ('pre_condition', models.TextField(blank=True, null=True)),
-                ('post_condition', models.TextField(blank=True, null=True)),
-                ('created_date', models.DateTimeField(auto_now_add=True)),
-                ('updated_date', models.DateTimeField(auto_now=True)),
-                ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.RESTRICT, related_name='testcase', to=settings.AUTH_USER_MODEL)),
-                ('project', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='projects.project')),
-                ('testcase_type', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.RESTRICT, to='testcases.testcasetype')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=255)),
+                ("description", models.TextField(blank=True, null=True)),
+                (
+                    "status",
+                    models.IntegerField(
+                        blank=True,
+                        choices=[
+                            (99, "Not Set"),
+                            (10, "Draft"),
+                            (20, "In Review"),
+                            (30, "Final"),
+                        ],
+                        default=99,
+                        null=True,
+                    ),
+                ),
+                (
+                    "severity",
+                    models.IntegerField(
+                        blank=True,
+                        choices=[
+                            (99, "Not Set"),
+                            (10, "Trivial"),
+                            (20, "Minor"),
+                            (30, "Normal"),
+                            (40, "Major"),
+                            (50, "Critical"),
+                        ],
+                        default=99,
+                        null=True,
+                    ),
+                ),
+                (
+                    "priority",
+                    models.IntegerField(
+                        blank=True,
+                        choices=[
+                            (99, "Not Set"),
+                            (10, "Low"),
+                            (20, "Medium"),
+                            (30, "High"),
+                        ],
+                        default=99,
+                        null=True,
+                    ),
+                ),
+                ("pre_condition", models.TextField(blank=True, null=True)),
+                ("post_condition", models.TextField(blank=True, null=True)),
+                ("created_date", models.DateTimeField(auto_now_add=True)),
+                ("updated_date", models.DateTimeField(auto_now=True)),
+                (
+                    "created_by",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.RESTRICT,
+                        related_name="testcase",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "project",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="projects.project",
+                    ),
+                ),
+                (
+                    "testcase_type",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.RESTRICT,
+                        to="testcases.testcasetype",
+                    ),
+                ),
             ],
             options={
-                'ordering': ['-updated_date'],
+                "ordering": ["-updated_date"],
             },
         ),
     ]

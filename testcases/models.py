@@ -29,6 +29,9 @@ class TestCase(models.Model):
     created_by = models.ForeignKey(
         User, related_name="testcase", on_delete=models.RESTRICT
     )
+    modified_by = models.ForeignKey(
+        User, related_name="tc_modified_by", on_delete=models.RESTRICT
+    )
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
