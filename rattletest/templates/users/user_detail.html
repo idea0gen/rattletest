@@ -9,10 +9,12 @@
   <div class="row">
     <div class="col-sm-12">
 
-      <h2>{{ object.username }}</h2>
-      {% if object.name %}
-        <p>{{ object.name }}</p>
-      {% endif %}
+        {% if object.name %}
+          <h6>Name: {{ object.name}}</h6>
+          <h6>Username: {{ object.username }}</h6>
+        {% else %}
+          <h6>Username: {{ object.username }}</h6>
+        {% endif %}
     </div>
   </div>
 

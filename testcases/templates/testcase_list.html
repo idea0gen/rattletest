@@ -3,8 +3,8 @@
 
 {% block content %}
 
-<h4>Projects |
-<a class="btn btn-primary btn-sm" href="{% url 'new_project' %}">Create Project</a></h4>
+<h4>Test Cases |
+<a class="btn btn-primary btn-sm" href="{% url 'new_testcase' project.id %}">Create Test Case</a></h4>
 <div class="container-fluid row px-3 pt-3 pb-3">
     <table class="table table-sm container-fluid">
         <thead>
@@ -12,8 +12,8 @@
                 <th scope="col">Test Case name</th>
                 <th scope="col">Status</th>
                 <th scope="col">Priority</th>
-                <th scope="col">Test Case Type</th>
-                <th scope="col">Creator</th>
+                <th scope="col">Modified By</th>
+                <th scope="col">Created By</th>
                 <th scope="col">Created</th>
                 <th scope="col">Updated</th>
             </tr>
@@ -21,11 +21,11 @@
         <tbody>
             {% for testcase in object_list %}
                 <tr>
-                    <td><a href="{% url 'edit_testcase' testcase.id %}">{{ testcase.title }}</td>
-                    <td>{{ testcase.status }}</td>
-                    <td>{{ testcase.priority }}</td>
-                    <td>{{ testcase.testcase_type }}</td>
-                    <td>{{ testcase.created_by.name }}</td>
+                    <td><a href="{% url 'edit_testcase' project.id testcase.id %}">{{ testcase.title }}</td>
+                    <td>{{ testcase.get_status_display }}</td>
+                    <td>{{ testcase.get_priority_display }}</td>
+                    <td>{{ testcase.modified_by.username }}</td>
+                    <td>{{ testcase.created_by.username }}</td>
                     <td>{{ testcase.created_date|date:'d-M-y' }}</td>
                     <td>{{ testcase.updated_date|date:'d-M-y' }}</td>
                 </tr>
