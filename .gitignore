@@ -1,6 +1,6 @@
 *.sqlite3
 .env
-
+venv_396/*
 ### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/
