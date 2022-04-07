@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
@@ -31,7 +32,7 @@ class Project(models.Model):
 
 
 def get_deleted_user_instance():
-    return User.objects.get(username="default").pk
+    return get_user_model().objects.get_or_create(username="deleted")[0]
 
 
 class Module(models.Model):
@@ -44,12 +45,12 @@ class Module(models.Model):
     created_by = models.ForeignKey(
         User,
         related_name="module_created_by",
-        on_delete=models.SET(get_deleted_user_instance()),
+        on_delete=models.SET(get_deleted_user_instance),
     )
     modified_by = models.ForeignKey(
         User,
         related_name="module_modified_by",
-        on_delete=models.SET(get_deleted_user_instance()),
+        on_delete=models.SET(get_deleted_user_instance),
     )
 
     def __str__(self):

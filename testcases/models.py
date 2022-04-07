@@ -1,5 +1,6 @@
 import os
 
+from django.contrib.auth import get_user_model
 from django.db import models
 
 from projects.models import Module, Project
@@ -26,7 +27,7 @@ class TestCaseType(models.Model):
 
 
 def get_deleted_user_instance():
-    return User.objects.get(username="default").pk
+    return get_user_model().objects.get_or_create(username="deleted")[0]
 
 
 class TestCase(models.Model):
@@ -34,12 +35,12 @@ class TestCase(models.Model):
     created_by = models.ForeignKey(
         User,
         related_name="tc_created_by",
-        on_delete=models.SET(get_deleted_user_instance()),
+        on_delete=models.SET(get_deleted_user_instance),
     )
     modified_by = models.ForeignKey(
         User,
         related_name="tc_modified_by",
-        on_delete=models.SET(get_deleted_user_instance()),
+        on_delete=models.SET(get_deleted_user_instance),
     )
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     module = models.ForeignKey(Module, on_delete=models.CASCADE)
