@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Create Module{% endblock %}
+
+{% block content %}
+  <section class="section">
+    <div class="columns container-fluid">
+      <div class="col-md-12 offset-md-2">
+        <h4 class="has-text-centered"><strong>New Module</strong></h4>
+        <form class="form" method="POST">
+        {% csrf_token %}
+            <div class="tab-content mt-6">
+                <div class="tab-pane active" id="common" role="tabpanel">
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="required form-label" for="inputName">Module name</label>
+                        <input type="text" name="name" id="inputName" class="form-control form-control-sm" placeholder="For example: Web Application" required="" autofocus="" value="">
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <button class="btn btn-primary btn-sm" type="submit">Create Module</button>
+                </div>
+            </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
