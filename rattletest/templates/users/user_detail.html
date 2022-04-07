@@ -4,32 +4,27 @@
 {% block title %}User: {{ object.username }}{% endblock %}
 
 {% block content %}
-<div class="container">
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+          {% if object.name %}
+            <h6>Name: {{ object.name}}</h6>
+            <h6>Username: {{ object.username }}</h6>
+          {% else %}
+            <h6>Username: {{ object.username }}</h6>
+          {% endif %}
+      </div>
+    </div>
 
+  {% if object == request.user %}
   <div class="row">
     <div class="col-sm-12">
-
-        {% if object.name %}
-          <h6>Name: {{ object.name}}</h6>
-          <h6>Username: {{ object.username }}</h6>
-        {% else %}
-          <h6>Username: {{ object.username }}</h6>
-        {% endif %}
+      <a class="btn btn-primary btn-sm" href="{% url 'users:update' %}" role="button">My Info</a>
+      <a class="btn btn-primary btn-sm" href="{% url 'account_email' %}" role="button">E-Mail</a>
     </div>
   </div>
-
-{% if object == request.user %}
-<!-- Action buttons -->
-<div class="row">
-
-  <div class="col-sm-12">
-    <a class="btn btn-primary btn-sm" href="{% url 'users:update' %}" role="button">My Info</a>
-    <a class="btn btn-primary btn-sm" href="{% url 'account_email' %}" role="button">E-Mail</a>
-    <!-- Your Stuff: Custom user template urls -->
-  </div>
-
-</div>
-<!-- End Action buttons -->
+</section>
 {% endif %}
 
 </div>

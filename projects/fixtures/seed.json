@@ -1,0 +1,13 @@
+[
+    {"model": "users.user",
+        "pk": -99,
+        "fields": {
+            "password": "argon2$argon2id$v=19$m=102400,t=2,p=8$N05kRnZkaWJWSjNFZFlwNkpGUTVUTA$JuLbtbegi7u0oSsFrOv7y5BOrZW7SFP+pV0gLgF8S0A",
+            "username": "deleted",
+            "email": "deleted@admin.org",
+            "is_staff": true,
+            "is_active": true,
+            "name": "Deleted User"
+            }
+        }
+]

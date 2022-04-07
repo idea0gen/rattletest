@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Modules{% endblock %}
+
+{% block content %}
+<section class="section">
+    <h4>Modules |
+    <a class="btn btn-primary btn-sm" href="{% url 'new_module' project.id %}">Create Module</a></h4>
+    <div class="container-fluid row px-3 pt-3 pb-3">
+        <table class="table table-sm container-fluid">
+            <thead>
+                <tr>
+                <th scope="col">Project Code</th>
+                <th scope="col">Module Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Created</th>
+                <th scope="col">Updated</th>
+                <th scope="col">Go To Test Cases</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for module in object_list %}
+                    <tr>
+                        <td>{{ module.project.project_code }}</td>
+                        <td><a href="{% url 'module_edit' project.id module.id %}">{{ module.name }}</td>
+                        <td><a href="#">{{ project.created_by.name }}</td>
+                        <td>{{ module.created_date|date:'d-M-y' }}</td>
+                        <td>{{ module.updated_date|date:'d-M-y' }}</td>
+                        <td><a href="{% url 'testcases' project.id module.id %}">TC List</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}
