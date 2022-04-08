@@ -18,7 +18,9 @@
 
     {% block css %}
     <!-- Latest compiled and minified Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
     <!-- Your stuff: Third-party CSS libraries go here -->
     <!-- This file stores project-specific CSS -->
@@ -31,8 +33,7 @@
       <!-- Bootstrap JS and its dependencies-->
       <script defer src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
       <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-      <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+      <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
       <!-- Your stuff: Third-party javascript libraries go here -->
       <script src="https://kit.fontawesome.com/d50b5a5a6e.js" crossorigin="anonymous"></script>
 
@@ -44,55 +45,59 @@
   </head>
 
   <body>
-
-    <div class="mb-4 container">
-      <nav class="navbar navbar-expand-sm rounded navbar-dark" style="background-color: #084594;">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="{% url 'home' %}">Rattle Test</a>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'projects' %}">Projects <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'about' %}">About</a>
-            </li>
-
-            {% if request.user.is_authenticated %}
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Welcome {{request.user.username}}
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item small" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
-                  <a class="dropdown-item small" href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
-                </div>
-              </li>
-            {% else %}
-              <li class="nav-item">
-                {# URL provided by django-allauth/account/urls.py #}
-                <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>
-              </li>
-              <li class="nav-item">
-                {# URL provided by django-allauth/account/urls.py #}
-                <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% trans "Sign In" %}</a>
-              </li>
-            {% endif %}
-          </ul>
-        </div>
-      </nav>
-
-    </div>
+    <nav class="navbar navbar-dark navbar-expand-md justify-content-center" style="background-color: #084594;">
       <div class="container">
+          <a class="navbar-brand d-flex w-50 me-auto" href="{% url 'home' %}">Rattle Test</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsingNavbar3">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
+              <ul class="nav navbar-nav ms-auto w-100 justify-content-end">
+                  <li class="nav-item">
+                      <a class="nav-link text-white" href="{% url 'projects' %}">Projects <span class="sr-only">(current)</span></a>
+                  </li>
+                  {% if request.user.is_authenticated %}
+                      <li class="nav-item">
+                          <a class="nav-link" href="#">Right</a>
+                      </li>
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Welcome {{request.user.username}}
+                        </a>
+                          <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarScrollingDropdown">
+                              <li><a class="dropdown-item small" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a></li>
+                              <li>
+                                <hr class="dropdown-divider">
+                              </li>
+                              <li><a class="dropdown-item small" href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a></li>
+                          </ul>
+                      </li>
+                  {% else %}
+                      <li class="nav-item">
+                        {# URL provided by django-allauth/account/urls.py #}
+                        <a id="sign-up-link" class="nav-link text-white" href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>
+                      </li>
+                      <li class="nav-item">
+                        {# URL provided by django-allauth/account/urls.py #}
+                        <a id="log-in-link " class="nav-link text-white" href="{% url 'account_login' %}">{% trans "Sign In" %}</a>
+                      </li>
+                  {% endif %}
+              </ul>
+          </div>
+      </div>
+  </nav>
 
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
-            {% endfor %}
-        {% endif %}
+    <div class="container">
+        <div class="section">
+          {% if messages %}
+              {% for message in messages %}
+              <div class="alert {% if message.tags %}alert-{{message.tags}} {% endif %} alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+              {% endfor %}
+          {% endif %}
+      </div>
 
         {% if form.errors %}
           <div class="alert alert-error">
@@ -116,6 +121,13 @@
           <p>Use this document as a way to quick start any new project.</p>
         {% endblock content %}
 
+
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+          <p class="mb-1">MIT License</p>
+          <ul class="list-inline">
+            <li class="list-inline-item"><a href="{% url 'about' %}">About</a></li>
+          </ul>
+        </footer>
       </div> <!-- /container -->
 
     {% block modal %}{% endblock modal %}

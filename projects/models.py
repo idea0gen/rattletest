@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
@@ -13,6 +14,7 @@ class Project(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.PROTECT)
+    members = models.ManyToManyField(User, related_name="members")
 
     class Meta:
         ordering = ["-updated_date"]
@@ -27,3 +29,29 @@ class Project(models.Model):
         slug_value = self.name
         self.project_slug = slugify(slug_value, allow_unicode=True)
         super().save(*args, **kwargs)
+
+
+def get_deleted_user_instance():
+    return get_user_model().objects.get_or_create(username="deleted")[0]
+
+
+class Module(models.Model):
+    project = models.ForeignKey(
+        Project, related_name="modules", on_delete=models.CASCADE
+    )
+    name = models.CharField(max_length=255)
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(
+        User,
+        related_name="module_created_by",
+        on_delete=models.SET(get_deleted_user_instance),
+    )
+    modified_by = models.ForeignKey(
+        User,
+        related_name="module_modified_by",
+        on_delete=models.SET(get_deleted_user_instance),
+    )
+
+    def __str__(self):
+        return self.name
