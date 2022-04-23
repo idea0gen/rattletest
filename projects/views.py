@@ -1,7 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.exceptions import PermissionDenied
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, DeleteView, ListView
 from django.views.generic.edit import UpdateView
 
 from projects.models import Module, Project
@@ -54,8 +56,8 @@ class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return redirect("projects")
 
     def test_func(self):
-        project = self.get_object()
-        if project.created_by == self.request.user:
+        members = self.get_object().members.all()
+        if members.contains(self.request.user):
             return True
         return False
 
@@ -65,9 +67,51 @@ class ProjectListView(LoginRequiredMixin, ListView):
     template_name = "project_list.html"
 
     def get_queryset(self):
-        return Project.objects.filter(created_by=self.request.user).order_by(
-            "-created_date"
+        return (
+            Project.objects.filter(members__id__exact=self.request.user.id)
+            .order_by("-created_date")
+            .select_related("created_by")
         )
+
+
+class ProjectDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Project
+
+    def get_object(self, queryset=None):
+        project = Project.objects.get(id=self.kwargs.get("pk"))
+        return project
+
+    # def get_object(self, queryset=None):
+
+    #     project = super(ProjectDeleteView, self.get_object())
+    #     if project.created_by != self.request.user:
+    #         raise Http404
+    #     return project
+
+    def post(self, *args, **kwargs):
+        print("self.get_object is:", self.get_object())
+        self.get_object().delete()
+        payload = {"status": "success", "message": "Project deleted successfully"}
+
+        return JsonResponse(payload)
+        # return redirect("projects")
+
+    def test_func(self):
+        project = self.get_object()
+        print("project is:", project)
+        if project.created_by == self.request.user:
+            return True
+        return False
+
+    def handle_no_permission(self):
+        if self.raise_exception:
+            raise PermissionDenied(self.get_permission_denied_message())
+        payload = {
+            "status": "fail",
+            "message": "You do not have permission, please ask the owner of project to delete",
+        }
+        # return redirect("project")
+        return JsonResponse(payload)
 
 
 class ModuleCreate(LoginRequiredMixin, CreateView):

@@ -9,18 +9,26 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('testcases', '0008_alter_testcase_attachment'),
+        ("testcases", "0008_alter_testcase_attachment"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='testcase',
-            name='created_by',
-            field=models.ForeignKey(on_delete=models.SET(testcases.models.get_deleted_user_instance), related_name='tc_created_by', to=settings.AUTH_USER_MODEL),
+            model_name="testcase",
+            name="created_by",
+            field=models.ForeignKey(
+                on_delete=models.SET(testcases.models.get_deleted_user_instance),
+                related_name="tc_created_by",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AlterField(
-            model_name='testcase',
-            name='modified_by',
-            field=models.ForeignKey(on_delete=models.SET(testcases.models.get_deleted_user_instance), related_name='tc_modified_by', to=settings.AUTH_USER_MODEL),
+            model_name="testcase",
+            name="modified_by",
+            field=models.ForeignKey(
+                on_delete=models.SET(testcases.models.get_deleted_user_instance),
+                related_name="tc_modified_by",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]
