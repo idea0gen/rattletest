@@ -2,36 +2,54 @@
 {% block title %}Test Cases{% endblock %}
 
 {% block content %}
-<section class="section">
-    <h4>Test Cases |
-    <a class="btn btn-primary btn-sm" href="{% url 'new_testcase' project.id module.id %}">Create Test Case</a></h4>
-    <div class="container-fluid row px-3 pt-3 pb-3">
-        <table class="table table-sm container-fluid">
-            <thead>
-                <tr>
-                    <th scope="col">Test Case name</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Priority</th>
-                    <th scope="col">Modified By</th>
-                    <th scope="col">Created By</th>
-                    <th scope="col">Created</th>
-                    <th scope="col">Updated</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for testcase in object_list %}
-                    <tr>
-                        <td><a href="{% url 'edit_testcase' project.id module.id testcase.id %}">{{ testcase.title }}</td>
-                        <td>{{ testcase.get_status_display }}</td>
-                        <td>{{ testcase.get_priority_display }}</td>
-                        <td>{{ testcase.modified_by.username }}</td>
-                        <td>{{ testcase.created_by.username }}</td>
-                        <td>{{ testcase.created_date|date:'d-M-y' }}</td>
-                        <td>{{ testcase.updated_date|date:'d-M-y' }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+<section class="section container">
+  <div class="style_header">
+    <h5 class="style_title">Test Cases<span class="style_statistic"></h5>
+  </div>
+  <div class="style_root">
+    <div class="d-flex">
+      <div class="d-flex style_buttons">
+        <a id="create-suite-button" class="btn me-2 btn-success btn-xs" href="{% url 'new_testcase' project.id module.id %}">
+          <i class="fa fa-plus"></i> Test Case
+        </a>
+      </div>
+      <div class="filters-block">
+        <div class="filters-block-items">
+          <div class="form-inline case-search case-search-input me-4">
+            <input type="text" name="title" class="form-control search-input" placeholder="Search for test case" value="">
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <table class="table projects-table mt-3 table-sm" cellspacing="0">
+    <thead>
+      <tr>
+        <th class="sortable">ID</th>
+        <th class="sortable hidden-xs">Test Case Name</th>
+        <th class="sortable hidden-xs">Status</th>
+        <th class="sortable hidden-xs">Priority</th>
+        <th class="sortable hidden-xs">Modified By</th>
+        <th class="sortable hidden-xs">Created By</th>
+        <th class="sortable hidden-xs">Created Date</th>
+        <th class="sortable hidden-xs">Modified Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for testcase in object_list %}
+        <tr>
+          <td>{{ testcase.id }}</td>
+          <td><a href="{% url 'edit_testcase' project.id module.id testcase.id %}">{{ testcase.title }}</td>
+          <td>{{ testcase.get_status_display }}</td>
+          <td>{{ testcase.get_priority_display }}</td>
+          <td>{{ testcase.modified_by.username }}</td>
+          <td>{{ testcase.created_by.username }}</td>
+          <td>{{ testcase.created_date|date:'d-M-y' }}</td>
+          <td>{{ testcase.updated_date|date:'d-M-y' }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </section>
 {% endblock %}
