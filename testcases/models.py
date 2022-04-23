@@ -42,8 +42,12 @@ class TestCase(models.Model):
         related_name="tc_modified_by",
         on_delete=models.SET(get_deleted_user_instance),
     )
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    module = models.ForeignKey(Module, on_delete=models.CASCADE)
+    project = models.ForeignKey(
+        Project, related_name="testcases", on_delete=models.CASCADE
+    )
+    module = models.ForeignKey(
+        Module, related_name="testcases", on_delete=models.CASCADE
+    )
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     status = models.IntegerField(

@@ -2,31 +2,65 @@
 {% block title %}Modules{% endblock %}
 
 {% block content %}
-<section class="section">
-    <h4>Modules |
-    <a class="btn btn-primary btn-sm" href="{% url 'new_module' project.id %}">Create Module</a></h4>
+<section class="section container">
+    <div class="style_header">
+        <h4 class="style_title">{{ project.name }}
+          <span class="style_statistic">
+            {{object_list.count}} module
+            |
+            {% with tc_total=project.testcases.count %}
+              {{ tc_total }} test case{{ tc_total|pluralize }}
+            {% endwith %}
+          </span>
+        </h4>
+        <div class="dropdown">
+          <a class="btn btn-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+              <i class="fa fa-ellipsis-h"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-end">
+              <div class="dropdown-item"><a href="{% url 'project_edit' project.id %}">Edit</a></div>
+              <div class="dropdown-item"><a class="text-danger" href="/project/CP/delete">Delete</a></div>
+          </div>
+        </div>
+    </div>
+    <div class="style_root">
+      <div class="d-flex">
+        <div class="d-flex style_buttons">
+          <a id="create-suite-button" class="btn me-2 btn-success btn-xs" href="{% url 'new_module' project.id %}">
+            <i class="fa fa-plus"></i> Module
+          </a>
+        </div>
+        <div class="filters-block">
+          <div class="filters-block-items">
+            <div class="form-inline case-search case-search-input me-4">
+              <input type="text" name="title" class="form-control search-input" placeholder="Search for Module" value="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container-fluid row px-3 pt-3 pb-3">
         <table class="table table-sm container-fluid">
             <thead>
                 <tr>
-                <th scope="col">Project Code</th>
-                <th scope="col">Module Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Created</th>
-                <th scope="col">Updated</th>
-                <th scope="col">Go To Test Cases</th>
+                    <th scope="col">Project Code</th>
+                    <th scope="col">Module Name</th>
+                    <th scope="col">Created By</th>
+                    <th scope="col">Created</th>
+                    <th scope="col">Modified</th>
+                    <th scope="col">Go To Test Cases</th>
                 </tr>
             </thead>
             <tbody>
                 {% for module in object_list %}
-                    <tr>
-                        <td>{{ module.project.project_code }}</td>
-                        <td><a href="{% url 'module_edit' project.id module.id %}">{{ module.name }}</td>
-                        <td><a href="#">{{ project.created_by.name }}</td>
-                        <td>{{ module.created_date|date:'d-M-y' }}</td>
-                        <td>{{ module.updated_date|date:'d-M-y' }}</td>
-                        <td><a href="{% url 'testcases' project.id module.id %}">TC List</td>
-                    </tr>
+                <tr>
+                    <td>{{ module.project.project_code }}</td>
+                    <td><a href="{% url 'module_edit' project.id module.id %}">{{ module.name }}</td>
+                    <td><a href="#">{{ project.created_by.name }}</td>
+                    <td>{{ module.created_date|date:'d-M-y' }}</td>
+                    <td>{{ module.updated_date|date:'d-M-y' }}</td>
+                    <td><a href="{% url 'testcases' project.id module.id %}">TC List</td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>

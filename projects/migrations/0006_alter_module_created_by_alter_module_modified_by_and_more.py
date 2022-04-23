@@ -9,23 +9,33 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('projects', '0005_project_members'),
+        ("projects", "0005_project_members"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='module',
-            name='created_by',
-            field=models.ForeignKey(on_delete=models.SET(projects.models.get_deleted_user_instance), related_name='module_created_by', to=settings.AUTH_USER_MODEL),
+            model_name="module",
+            name="created_by",
+            field=models.ForeignKey(
+                on_delete=models.SET(projects.models.get_deleted_user_instance),
+                related_name="module_created_by",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AlterField(
-            model_name='module',
-            name='modified_by',
-            field=models.ForeignKey(on_delete=models.SET(projects.models.get_deleted_user_instance), related_name='module_modified_by', to=settings.AUTH_USER_MODEL),
+            model_name="module",
+            name="modified_by",
+            field=models.ForeignKey(
+                on_delete=models.SET(projects.models.get_deleted_user_instance),
+                related_name="module_modified_by",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AlterField(
-            model_name='project',
-            name='members',
-            field=models.ManyToManyField(related_name='members', to=settings.AUTH_USER_MODEL),
+            model_name="project",
+            name="members",
+            field=models.ManyToManyField(
+                related_name="members", to=settings.AUTH_USER_MODEL
+            ),
         ),
     ]

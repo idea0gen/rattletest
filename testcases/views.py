@@ -46,13 +46,13 @@ class TestCaseCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         "pre_condition",
         "post_condition",
         "attachment",
+        "project",
+        "module",
     ]
     template_name = "testcase_form.html"
 
     def form_valid(self, form):
         testcase = form.save(commit=False)
-        testcase.project = Project.objects.get(id=self.kwargs["project_id"])
-        testcase.module = Module.objects.get(id=self.kwargs["module_id"])
         testcase.created_by = self.request.user
         testcase.modified_by = self.request.user
         testcase.attachment = self.request.FILES.get("attachment")
@@ -65,8 +65,7 @@ class TestCaseCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
     def test_func(self):
         project = Project.objects.get(id=self.kwargs["project_id"])
-        user_projects = self.request.user.members.all()
-        print("User_projects", user_projects)
+        user_projects = self.request.user.projects.all()
         if project in user_projects:
             return True
         return False
@@ -79,6 +78,15 @@ class TestCaseCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
             "You do not have permission, please ask the owner of project to provide you permission",
         )
         return redirect("projects")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["projects"] = Project.objects.all()
+        # context["module"] = Module.objects.filter(id=self.kwargs["module_id"])
+        context["modules"] = Module.objects.all()
+        context["project"] = Project.objects.get(id=self.kwargs["project_id"])
+        context["module"] = Module.objects.get(id=self.kwargs["module_id"])
+        return context
 
 
 class TestCaseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -93,6 +101,8 @@ class TestCaseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         "pre_condition",
         "post_condition",
         "attachment",
+        "project",
+        "module",
     ]
 
     def get_object(self, queryset=None):
@@ -143,8 +153,8 @@ class TestCaseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         testcase = form.save(commit=False)
         testcase.modified_by = self.request.user
-        testcase.project = Project.objects.get(id=self.kwargs["project_id"])
-        testcase.module = Module.objects.get(id=self.kwargs["module_id"])
+        # testcase.project = Project.objects.get(id=self.kwargs["project_id"])
+        # testcase.module = Module.objects.get(id=self.kwargs["module_id"])
         testcase.save()
         messages.success(self.request, "Testcase updated successfully")
         return redirect("testcases", testcase.project.id, testcase.module_id)
@@ -156,6 +166,8 @@ class TestCaseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["project"] = Project.objects.get(id=self.kwargs["project_id"])
-        context["module"] = Module.objects.get(id=self.kwargs["module_id"])
+        # context["project"] = Project.objects.filter(id=self.kwargs["project_id"])
+        # context["module"] = Module.objects.filter(id=self.kwargs["module_id"])
+        context["projects"] = Project.objects.all()
+        context["modules"] = Module.objects.all()
         return context

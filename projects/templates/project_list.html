@@ -3,36 +3,135 @@
 
 {% block content %}
 
-<section class="section">
-    <h4>Projects |
-    <a class="btn btn-primary btn-sm" href="{% url 'new_project' %}">Create Project</a></h4>
-    <div class="container-fluid row px-3 pt-3 pb-3">
-        <table class="table table-sm container-fluid">
-            <thead>
-                <tr>
-                <th scope="col">Project Code</th>
-                <th scope="col">Project Name</th>
-                <th scope="col">Owner</th>
-                <th scope="col">Description</th>
-                <th scope="col">Created</th>
-                <th scope="col">Updated</th>
-                <th scope="col">Go To Modules</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for project in object_list %}
-                    <tr>
-                        <td>{{ project.project_code }}</td>
-                        <td><a href="{% url 'project_edit' project.id %}">{{ project.name }}</td>
-                        <td><a href="{% url 'users:detail' project.created_by.username  %}">{{ project.created_by.name }}</td>
-                        <td>{{ project.description }}</td>
-                        <td>{{ project.created_date|date:'d-M-y' }}</td>
-                        <td>{{ project.updated_date|date:'d-M-y' }}</td>
-                        <td><a href="{% url 'modules' project.id %}">Module</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+<section class="section container">
+  <div class="style_header">
+    <h4 class="style_title small">Projects<span class="style_statistic"></h4>
+  </div>
+  <div class="style_root">
+    <div class="d-flex">
+      <div class="d-flex style_buttons">
+        <a id="create-suite-button" class="btn me-2 btn-success btn-xs" href="{% url 'new_project' %}">
+          <i class="fa fa-plus"></i> Project
+        </a>
+      </div>
+      <div class="filters-block">
+        <div class="filters-block-items">
+          <div class="form-inline case-search case-search-input me-4">
+            <input type="text" name="title" class="form-control search-input" placeholder="Search for project" value="">
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+  <table class="table projects-table mt-3" cellspacing="0">
+    <thead>
+      <tr>
+        <th></th>
+        <th class="sortable">Project name</th>
+        <th class="sortable hidden-xs">Unresolved defects</th>
+        <th class="sortable hidden-xs">Test runs</th>
+        <th class="sortable hidden-xs">Milestones</th>
+        <th class="hidden-xs">Team members</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for project in object_list %}
+        <tr class="project-row" id="project-row">
+          <td class="text-center project-icon"><a class="project-name" href="{% url 'modules' project.id %}"><img
+                src="https://source.unsplash.com/40x40/?texture"
+                alt=""></a></td>
+          <td>
+            <div><a class="project-title" href="{% url 'modules' project.id %}">{{ project.name }}</a></div>
+            <div>
+              <span class="project-cases">
+                {% with mod_total=project.modules.count %}
+                    {{ mod_total }} module{{ mod_total|pluralize }}
+                {% endwith %}
+                |
+                {% with tc_total=project.testcases.count %}
+                  {{ tc_total }} testcase{{ tc_total|pluralize }}
+                {% endwith %}
+                | No active runs
+              </span>
+            </div>
+          </td>
+          <td class="hidden-xs"><i class="green fa fa-check"></i> No open defects</td>
+          <td class="hidden-xs">No test runs</td>
+          <td class="hidden-xs">No milestones</td>
+          <td class="hidden-xs">
+            {% for member in project.members.all %}
+            <img alt="{{ member.username }}" title="{{ member.username }}" class="avatar-xs me-1"
+              src="https://source.unsplash.com/24x24/?face">
+            {% endfor %}
+          </td>
+          <td class="text-end">
+            <div class="dropdown">
+              <a class="btn btn-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+                <i class="fa fa-ellipsis-h"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end">
+                <div class="dropdown-item"><a href="{% url 'project_edit' project.id %}">Edit1</a></div>
+
+                <div class="dropdown-item">
+                  <a class="delete-icon" id="{{project.id}}" onclick='deleteProject({{ project.id }})''>Delete</a>
+                <!-- <a class="text-danger" href="{% url 'project_delete' project.id %}">Delete</a></div> -->
+              </div>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
 </section>
+{% endblock %}
+
+{% block inline_javascript %}
+<script>
+  // var id = document.getElementById('project-delete').getAttribute('id');
+  // console.log("ID is:", id)
+  function deleteProject(id) {
+      let action = confirm('Are you sure you want to delete this post?');
+
+      let url = '/project/' + id + '/delete/';
+      if (action != false) {
+          $.ajax({
+              method: 'POST',
+              url: url,
+              dataType: 'json',
+              data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+              },
+              success: function (data) {
+                console.log(data["status"])
+                console.log(data["message"])
+                if (data["status"] === "success") {
+                  console.log("I am coming in success")
+                  console.log(data["message"])
+                  $('#project-row').remove()
+                  document.getElementById("section").innerHTML +=
+                  '<div id="alert" class="alert alert-success alert-dismissible fade show" role="alert">' + data["message"] +
+                    '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+                    setTimeout()
+                }
+                else if (data["status"] === "fail") {
+                  console.log("I am coming in fail")
+                  console.log(data["message"])
+                  document.getElementById("section").innerHTML +=
+                  '<div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert">' + data["message"] +
+                    '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+                    setTimeout()
+                }
+              },
+              // error: function(data){
+              //   console.log("error has occured")
+              //   console.log(data)
+                // window.location = "/project/"
+              // }
+
+          });
+      }
+  }
+
+</script>
 {% endblock %}
