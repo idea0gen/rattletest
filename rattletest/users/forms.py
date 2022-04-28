@@ -13,6 +13,7 @@ class UserChangeForm(admin_forms.UserChangeForm):
 class UserCreationForm(admin_forms.UserCreationForm):
     class Meta(admin_forms.UserCreationForm.Meta):
         model = User
+        fields = ["name", "username"]
 
         error_messages = {
             "username": {"unique": _("This username has already been taken.")}

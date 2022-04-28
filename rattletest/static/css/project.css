@@ -41,8 +41,11 @@ p {
   border-color: #f5c6cb;
 }
 
+.alert{
+  margin-top:1rem;
+}
+
 .form-group, .input-group {
-  margin-bottom: 1rem;
   position: relative;
   z-index: auto;
 }
@@ -57,7 +60,6 @@ label {
 
 .btn-xs, a.btn-xs, button.btn-xs {
   font-size: .75rem;
-  padding: 0.25rem 0.5rem;
 }
 
 table.projects-table th {
@@ -222,4 +224,8 @@ a.project-title {
   line-height: 14px;
   color: var(--secondary-text-color);
   margin-left: 8px;
+}
+
+.fixed-bottom {
+  position: relative;
 }
