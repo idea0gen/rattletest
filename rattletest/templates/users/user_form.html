@@ -1,35 +1,53 @@
-{% extends "base.html" %}
+{% extends "account/base.html" %}
+
+{% load i18n %}
 {% load crispy_forms_tags %}
 
 {% block title %}{{ user.username }}{% endblock %}
 
 {% block content %}
-  <section class="section">
-    <div class="columns container-fluid">
-      <div class="col-md-12 offset-md-2">
-        <h4 class="has-text-centered"><strong>Edit Profile</strong></h4>
-        <form class="form-horizontal" method="post" action="{% url 'users:update' %}">
-          {% csrf_token %}
+  <section class="section container">
 
-          <div class="tab-content mt-6">
-            <div class="tab-pane active" id="common" role="tabpanel">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="required form-label" for="id_name">Name</label>
-                    <input type="text" name="name" id="id_name" class="form-control form-control-sm"required="" autofocus="" value="{{user.name}}">
-                  </div>
-                </div>
+    <div class="columns container">
+      <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{% url 'users:update' %}">
+        {% csrf_token %}
+          <div class="row">
+            <div class="col-md-2">
+              <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <img class="rounded-circle mt-5" src="{% if user.avatar %} {{ user.avatar.url }} {% endif %}" width="90">
+                <span class="font-weight-bold">{{user.username}}</span>
+                <span class="text-black-50">{{ user.email }}</span>
+                <span>{{user.designation}}</span></div>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="required form-label" for="id_name">Name</label>
+                <input type="text" name="name" id="id_name" class="form-control form-control-sm" autofocus="" value="{{user.name}}">
               </div>
-            </div>
+              <div class="form-group">
+                <label class="required form-label" for="id_email">Email</label>
+                <input type="text" name="email" id="id_email" class="form-control form-control-sm"required="" autofocus="" value="{{user.email}}">
+              </div>
+              <div class="form-group">
+                <label class="required form-label" for="id_username">Username</label>
+                <input type="text" name="username" id="id_username" class="form-control form-control-sm"required="" autofocus="" value="{{user.username}}">
+              </div>
+              <div class="form-group">
+                <label class="required form-label" for="id_designation">Designation</label>
+                <input type="text" name="designation" id="designation" class="form-control form-control-sm"required="" autofocus="" value="{{user.designation}}">
+              </div>
+              <div class="form-group">
+                <label for="id_avatar form-label" class="form-label">Avatar:  {% if user.avatar %}<a href="{{ user.avatar.url }}">{{ user.filename }}</a>{% endif %}</label>
+                <input type="file" accept="image/*" name="avatar" id="id_avatar" class="form-control form-control-sm" value="{{ user.filename }}">
+              </div>
+              <div class="row mt-2">
+                <div class="col">
+                    <button class="btn btn-primary btn-sm" type="submit">Update</button>
+                </div>
+                </div>
           </div>
-          <div class="row mt-2">
-            <div class="col">
-              <button class="btn btn-primary btn-sm" type="submit">Save</button>
-            </div>
-          </div>
-        </form>
-      </div>
+      </form>
     <div>
   </section>
 {% endblock %}
