@@ -15,7 +15,7 @@ class User(AbstractUser):
     first_name = None  # type: ignore
     last_name = None  # type: ignore
     designation = models.CharField(max_length=255, blank=True)
-    about_me = models.TextField(blank=True)
+    about_me = models.TextField(blank=True, null=True)
     avatar = models.ImageField(upload_to="avatars/", null=True, blank=True)
 
     def get_absolute_url(self):
