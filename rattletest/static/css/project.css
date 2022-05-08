@@ -82,6 +82,7 @@ table.projects-table .project-row .project-icon {
 table.projects-table a.project-name {
   font-size: 1.125rem;
   color: #222;
+  text-decoration: none;
 }
 
 table.projects-table .project-row .project-icon img {

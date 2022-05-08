@@ -3,21 +3,21 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import CreateView, DeleteView, ListView
-from django.views.generic.edit import UpdateView
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from projects.models import Module, Project
 
 
 class ProjectCreate(LoginRequiredMixin, CreateView):
     model = Project
-    fields = ["name", "project_code", "description"]
+    fields = ["name", "project_code", "description", "members", "owner"]
     template_name = "project_form.html"
 
     def form_valid(self, form):
         project = form.save(commit=False)
         project.created_by = self.request.user
         project.save()
+        form.save_m2m()
         project.members.add(self.request.user.id)
         messages.success(self.request, "Project added successfully")
         return redirect("projects")
@@ -28,14 +28,15 @@ class ProjectCreate(LoginRequiredMixin, CreateView):
 
 class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Project
-    fields = ["name", "project_code", "description"]
+    fields = ["name", "project_code", "description", "members", "owner"]
     template_name = "project_update_form.html"
 
     def form_valid(self, form):
         project = form.save(commit=False)
-        project.created_by = self.request.user
         project.modified_by = self.request.user
         project.save()
+        form.save_m2m()
+        project.members.add(self.request.user.id)
         messages.success(self.request, "Project updated successfully")
         return redirect("projects")
 
@@ -56,10 +57,13 @@ class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return redirect("projects")
 
     def test_func(self):
-        members = self.get_object().members.all()
-        if members.contains(self.request.user):
+        if self.request.user == self.get_object().owner:
             return True
         return False
+        # members = self.get_object().members.all()
+        # if members.contains(self.request.user):
+        #     return True
+        # return False
 
 
 class ProjectListView(LoginRequiredMixin, ListView):
@@ -69,8 +73,8 @@ class ProjectListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return (
             Project.objects.filter(members__id__exact=self.request.user.id)
-            .order_by("-created_date")
-            .select_related("created_by")
+            .order_by("-owner")
+            .select_related("owner")
         )
 
 
@@ -81,15 +85,7 @@ class ProjectDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         project = Project.objects.get(id=self.kwargs.get("pk"))
         return project
 
-    # def get_object(self, queryset=None):
-
-    #     project = super(ProjectDeleteView, self.get_object())
-    #     if project.created_by != self.request.user:
-    #         raise Http404
-    #     return project
-
     def post(self, *args, **kwargs):
-        print("self.get_object is:", self.get_object())
         self.get_object().delete()
         payload = {"status": "success", "message": "Project deleted successfully"}
 
@@ -98,8 +94,7 @@ class ProjectDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         project = self.get_object()
-        print("project is:", project)
-        if project.created_by == self.request.user:
+        if project.owner == self.request.user:
             return True
         return False
 
@@ -176,7 +171,6 @@ class ModuleUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print("Context is:", context)
         return context
 
     def get_object(self, queryset=None):

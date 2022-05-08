@@ -2,9 +2,19 @@
 {% load i18n %}
 {% block title %}About Page{% endblock %}
 {% block content %}
-<section class="section">
-  <div class="container">
-      <p>{% trans 'AboutHeading' %}</p>
+<section class="section container">
+  <div class="style_header">
+    <h4 class="style_title">About<span class="style_statistic"></h4>
+  </div>
+  <div class="style_root">
+    <div class="d-flex">
+      <div class="d-flex style_buttons">
+        <p>
+          Built Using: Django <br>
+          Licence: MIT Licence
+        </p>
+      </div>
+    </div>
   </div>
 </section>
 {% endblock content %}
