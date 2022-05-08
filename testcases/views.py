@@ -30,7 +30,6 @@ class TestCaseListView(LoginRequiredMixin, ListView):
         context = super(TestCaseListView, self).get_context_data(**kwargs)
         context["project"] = Project.objects.get(id=self.kwargs["project_id"])
         context["module"] = Module.objects.get(id=self.kwargs["module_id"])
-        print("context is:", context)
         return context
 
 
@@ -153,8 +152,6 @@ class TestCaseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         testcase = form.save(commit=False)
         testcase.modified_by = self.request.user
-        # testcase.project = Project.objects.get(id=self.kwargs["project_id"])
-        # testcase.module = Module.objects.get(id=self.kwargs["module_id"])
         testcase.save()
         messages.success(self.request, "Testcase updated successfully")
         return redirect("testcases", testcase.project.id, testcase.module_id)
@@ -166,8 +163,6 @@ class TestCaseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context["project"] = Project.objects.filter(id=self.kwargs["project_id"])
-        # context["module"] = Module.objects.filter(id=self.kwargs["module_id"])
         context["projects"] = Project.objects.all()
         context["modules"] = Module.objects.all()
         return context

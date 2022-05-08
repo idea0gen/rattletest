@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
@@ -13,8 +14,10 @@ class Project(models.Model):
     project_code = models.CharField(max_length=6)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(
-        User, related_name="project_created_by", on_delete=models.PROTECT
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="project_created_by",
+        on_delete=models.PROTECT,
     )
     members = models.ManyToManyField(User, related_name="projects")
 

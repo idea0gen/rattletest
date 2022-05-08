@@ -77,5 +77,4 @@ class TestCase(models.Model):
         return self.title
 
     def filename(self):
-        print("self.attachment.name", self.attachment.name)
         return os.path.basename(self.attachment.name)
