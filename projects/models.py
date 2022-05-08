@@ -14,7 +14,7 @@ class Project(models.Model):
     project_code = models.CharField(max_length=6)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(
+    owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name="project_created_by",
         on_delete=models.PROTECT,

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Projects{% endblock %}
 
 {% block content %}
@@ -31,6 +32,7 @@
         <th class="sortable hidden-xs">Unresolved defects</th>
         <th class="sortable hidden-xs">Test runs</th>
         <th class="sortable hidden-xs">Milestones</th>
+        <th class="sortable hidden-xs">Owner</th>
         <th class="hidden-xs">Team members</th>
         <th></th>
       </tr>
@@ -60,26 +62,42 @@
           <td class="hidden-xs">No test runs</td>
           <td class="hidden-xs">No milestones</td>
           <td class="hidden-xs">
-            {% for member in project.members.all %}
-            <a href="{% url 'users:detail' member.username %}">
-              <img alt="{{ member.username }}" title="{{ member.username }}" class="avatar-xs me-1" src="{{ member.avatar.url }}">
+            <a class="project-name" href="{% url 'users:detail' project.owner.username %}">
+              {% if project.owner.avatar %}
+                <img alt="{{ project.owner.username }}" title="{{ project.owner.username }}" class="avatar-xs me-1" src="{{ project.owner.avatar.url }}">
+              {% else %}
+                <img alt="{{ project.owner.username }}" title="{{ project.owner.username }}" class="avatar-xs me-1" src="{% static 'images/default_avatar.jpg' %}">
+              {% endif %}
             </a>
+          </td>
+          <td class="hidden-xs">
+            {% for member in project.members.all %}
+              <a class="project-name" href="{% url 'users:detail' member.username %}">
+                {% if member.avatar %}
+                  <img alt="{{ member.username }}" title="{{ member.username }}" class="avatar-xs me-1" src="{{ member.avatar.url }}">
+                {% else %}
+                  <img alt="{{ member.username }}" title="{{ member.username }}" class="avatar-xs me-1" src="{% static 'images/default_avatar.jpg' %}">
+                {% endif %}
+              </a>
             {% endfor %}
           </td>
-          <td class="text-end">
-            <div class="dropdown">
-              <a class="btn btn-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
-                <i class="fa fa-ellipsis-h"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-end">
-                <div class="dropdown-item"><a href="{% url 'project_edit' project.id %}">Edit1</a></div>
+          {% if request.user.id == project.owner.id %}
+            <td class="text-end">
+              <div class="dropdown">
+                <a class="btn btn-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+                  <i class="fa fa-ellipsis-h"></i>
+                </a>
 
-                <div class="dropdown-item">
-                  <a class="delete-icon" id="{{project.id}}" onclick='deleteProject({{ project.id }})''>Delete</a>
-                <!-- <a class="text-danger" href="{% url 'project_delete' project.id %}">Delete</a></div> -->
+                <div class="dropdown-menu dropdown-menu-end">
+                  <div class="dropdown-item"><a href="{% url 'project_edit' project.id %}">Edit</a></div>
+
+                  <div class="dropdown-item">
+                    <a class="delete-icon" id="{{project.id}}" onclick='deleteProject({{ project.id }})''>Delete</a>
+                  <!-- <a class="text-danger" href="{% url 'project_delete' project.id %}">Delete</a></div> -->
+                </div>
               </div>
-            </div>
-          </td>
+            </td>
+          {% endif %}
         </tr>
         {% endfor %}
     </tbody>
@@ -120,12 +138,6 @@
                     setTimeout(5000)
                 }
               },
-              // error: function(data){
-              //   console.log("error has occured")
-              //   console.log(data)
-                // window.location = "/project/"
-              // }
-
           });
       }
   }

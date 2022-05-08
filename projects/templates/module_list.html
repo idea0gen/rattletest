@@ -19,7 +19,7 @@
           </a>
           <div class="dropdown-menu dropdown-menu-end">
               <div class="dropdown-item"><a href="{% url 'project_edit' project.id %}">Edit</a></div>
-              <div class="dropdown-item"><a class="text-danger" href="/project/CP/delete">Delete</a></div>
+              <div class="dropdown-item"><a class="text-danger" href="{% url 'project_delete' project.id %}">Delete</a></div>
           </div>
         </div>
     </div>

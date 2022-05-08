@@ -13,13 +13,21 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name='testcase',
-            name='module',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='testcases', to='projects.module'),
+            model_name="testcase",
+            name="module",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="testcases",
+                to="projects.module",
+            ),
         ),
         migrations.AlterField(
-            model_name='testcase',
-            name='project',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='testcases', to='projects.project'),
+            model_name="testcase",
+            name="project",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="testcases",
+                to="projects.project",
+            ),
         ),
     ]

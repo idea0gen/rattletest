@@ -30,7 +30,6 @@ class TestCaseListView(LoginRequiredMixin, ListView):
         context = super(TestCaseListView, self).get_context_data(**kwargs)
         context["project"] = Project.objects.get(id=self.kwargs["project_id"])
         context["module"] = Module.objects.get(id=self.kwargs["module_id"])
-        print("context is:", context)
         return context
 
 
