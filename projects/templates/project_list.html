@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Projects{% endblock %}
 
 {% block content %}
@@ -71,13 +72,13 @@
           </td>
           <td class="hidden-xs">
             {% for member in project.members.all %}
-            <a class="project-name" href="{% url 'users:detail' member.username %}">
-              {% if member.avatar %}
-                <img alt="{{ member.username }}" title="{{ member.username }}" class="avatar-xs me-1" src="{{ member.avatar.url }}">
-              {% else %}
-                <img alt="{{ member.username }}" title="{{ member.username }}" class="avatar-xs me-1" src="{% static 'images/default_avatar.jpg' %}">
-              {% endif %}
-            </a>
+              <a class="project-name" href="{% url 'users:detail' member.username %}">
+                {% if member.avatar %}
+                  <img alt="{{ member.username }}" title="{{ member.username }}" class="avatar-xs me-1" src="{{ member.avatar.url }}">
+                {% else %}
+                  <img alt="{{ member.username }}" title="{{ member.username }}" class="avatar-xs me-1" src="{% static 'images/default_avatar.jpg' %}">
+                {% endif %}
+              </a>
             {% endfor %}
           </td>
           {% if request.user.id == project.owner.id %}
@@ -137,12 +138,6 @@
                     setTimeout(5000)
                 }
               },
-              // error: function(data){
-              //   console.log("error has occured")
-              //   console.log(data)
-                // window.location = "/project/"
-              // }
-
           });
       }
   }

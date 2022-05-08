@@ -7,8 +7,8 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("projects", "0007_alter_project_created_by_alter_project_members"),
-        ("testcases", "0009_alter_testcase_created_by_alter_testcase_modified_by"),
+        ('projects', '0007_alter_project_created_by_alter_project_members'),
+        ('testcases', '0009_alter_testcase_created_by_alter_testcase_modified_by'),
     ]
 
     operations = [
