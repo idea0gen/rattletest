@@ -1,5 +1,7 @@
 import os
 
+import dj_database_url
+
 from .base import *  # noqa
 from .base import env
 
@@ -23,18 +25,21 @@ ALLOWED_HOSTS = [DIVIO_DOMAIN] + DIVIO_DOMAIN_ALIASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("DB_NAME"),
-        "USER": os.environ.get("DB_USER"),
-        "PASSWORD": os.environ.get("DB_PWD"),
-        "HOST": os.environ.get("DB_HOST"),
-        "PORT": "5432",
-        "ATOMIC_REQUESTS": True,
-        "CONN_MAX_AGE": 60,
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": os.environ.get("DB_NAME"),
+#         "USER": os.environ.get("DB_USER"),
+#         "PASSWORD": os.environ.get("DB_PWD"),
+#         "HOST": os.environ.get("DB_HOST"),
+#         "PORT": "5432",
+#         "ATOMIC_REQUESTS": True,
+#         "CONN_MAX_AGE": 60,
+#     }
+# }
+DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite://:memory:")
+
+DATABASES = {"default": dj_database_url.parse(DATABASE_URL)}
 
 # CACHES
 # ------------------------------------------------------------------------------
