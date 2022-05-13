@@ -1,7 +1,5 @@
 import os
 
-import dj_database_url
-
 from .base import *  # noqa
 from .base import env
 
@@ -20,16 +18,18 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", default=["localhost"])
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite://:memory:")
-DATABASES = {"default": dj_database_url.parse(DATABASE_URL)}
-
-# DATABASES = {
-#     "default": os.environ.get("DATABASE_URL", default="postgres://localhost/rattletest"),
-# }
-DATABASES["default"]["ATOMIC_REQUESTS"] = True
-DATABASES["default"] = os.environ.get("DATABASE_URL")  # noqa F405
-DATABASES["default"]["ATOMIC_REQUESTS"] = True  # noqa F405
-DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa F405
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ.get("DB_NAME"),
+        "USER": os.environ.get("DB_USER"),
+        "PASSWORD": os.environ.get("DB_PWD"),
+        "HOST": os.environ.get("DB_HOST"),
+        "PORT": "5432",
+        "ATOMIC_REQUESTS": True,
+        "CONN_MAX_AGE": 60,
+    }
+}
 
 # CACHES
 # ------------------------------------------------------------------------------
