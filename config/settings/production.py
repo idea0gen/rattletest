@@ -8,7 +8,12 @@ from .base import env
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", default=["localhost"])
+DIVIO_DOMAIN = os.environ.get("DOMAIN", "")
+DIVIO_DOMAIN_ALIASES = [
+    d.strip() for d in os.environ.get("DOMAIN_ALIASES", "").split(",") if d.strip()
+]
+ALLOWED_HOSTS = [DIVIO_DOMAIN] + DIVIO_DOMAIN_ALIASES
+
 
 # DATABASES
 # ------------------------------------------------------------------------------

@@ -1,5 +1,3 @@
-import os
-
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -13,7 +11,7 @@ urlpatterns = [
         "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
     ),
     # Django Admin, use {% url 'admin:index' %}
-    path("abc/" + os.environ.get("DJANGO_ADMIN_URL"), admin.site.urls),
+    path("adm1n/", admin.site.urls),
     # User management
     path("users/", include("rattletest.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
