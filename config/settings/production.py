@@ -27,7 +27,7 @@ DATABASES = {"default": dj_database_url.parse(DATABASE_URL)}
 #     "default": os.environ.get("DATABASE_URL", default="postgres://localhost/rattletest"),
 # }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
-DATABASES["default"] = env.db("DATABASE_URL")  # noqa F405
+DATABASES["default"] = os.environ.get("DATABASE_URL")  # noqa F405
 DATABASES["default"]["ATOMIC_REQUESTS"] = True  # noqa F405
 DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa F405
 
