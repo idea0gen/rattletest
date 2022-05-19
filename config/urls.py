@@ -1,3 +1,5 @@
+import os
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -18,7 +20,7 @@ urlpatterns = [
     # Your stuff: custom urls includes go here
     path("", include("projects.urls"), name="project"),
     path("", include("testcases.urls"), name="testcase"),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(os.environ.get("MEDIA_URL"), document_root=os.environ.get("MEDIA_ROOT"))
 
 
 if settings.DEBUG:
