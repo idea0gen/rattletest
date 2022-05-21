@@ -20,7 +20,7 @@ urlpatterns = [
     # Your stuff: custom urls includes go here
     path("", include("projects.urls"), name="project"),
     path("", include("testcases.urls"), name="testcase"),
-] + static(os.environ.get("MEDIA_URL"), document_root=os.environ.get("MEDIA_ROOT"))
+] + static("/media/", document_root=os.environ.get("MEDIA_ROOT"))
 
 
 if settings.DEBUG:
