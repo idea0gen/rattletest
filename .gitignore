@@ -1,3 +1,4 @@
+.divio/*
 *.sqlite3
 .env
 venv_396/*
