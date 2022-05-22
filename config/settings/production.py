@@ -1,5 +1,7 @@
+import os
+
 from .base import *  # noqa
-from .base import env
+from .base import APPS_DIR, env
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -7,6 +9,8 @@ from .base import env
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["example.com"])
+# APPS_DIR = ROOT_DIR / "rattletest"
+
 
 # DATABASES
 # ------------------------------------------------------------------------------
@@ -67,8 +71,13 @@ SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
 # STATIC
 # ------------------------
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 # MEDIA
 # ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#media-root
+MEDIA_ROOT = str(APPS_DIR / "media")
+# https://docs.djangoproject.com/en/dev/ref/settings/#media-url
+MEDIA_URL = os.environ.get("MEDIA_URL")
 
 # TEMPLATES
 # ------------------------------------------------------------------------------
