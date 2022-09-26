@@ -1,10 +1,12 @@
+import os
+
 from .base import *  # noqa
 from .base import ROOT_DIR, env
 
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = True
+DEBUG = os.environ.get("DJANGO_DEBUG", default=False)
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = env(
     "DJANGO_SECRET_KEY",
@@ -79,8 +81,8 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         "APP": {
-            "client_id": env("CLIENT_ID_GITHUB"),
-            "secret": env("CLIENT_SECRET_GITHUB"),
+            "client_id": os.environ.get("CLIENT_ID_GITHUB"),
+            "secret": os.environ.get("CLIENT_SECRET_GITHUB"),
             "key": "",
         },
         # 'SCOPE': {
@@ -94,9 +96,12 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         "APP": {
-            "client_id": env("CLIENT_ID_GITLAB"),
-            "secret": env("CLIENT_SECRET_GITLAB"),
+            "client_id": os.environ.get("CLIENT_ID_GITLAB"),
+            "secret": os.environ.get("CLIENT_SECRET_GITLAB"),
             "key": "",
         }
     },
 }
+
+# django-sslserver
+INSTALLED_APPS += ["sslserver"]  # noqa F405

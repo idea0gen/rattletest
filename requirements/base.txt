@@ -12,3 +12,6 @@ django-model-utils==4.2.0  # https://github.com/jazzband/django-model-utils
 django-allauth==0.50.0  # https://github.com/pennersr/django-allauth
 django-crispy-forms==1.14.0  # https://github.com/django-crispy-forms/django-crispy-forms
 django-anymail[mailgun]==8.5  # https://github.com/anymail/django-anymail
+dj_database_url==1.0.0 # https://github.com/jazzband/dj-database-url
+django-storage-url==0.9.1 # https://github.com/divio/django-storage-url
+boto3==1.24.82 # https://github.com/boto/boto3
