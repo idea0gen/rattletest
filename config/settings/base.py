@@ -1,10 +1,12 @@
 """
 Base settings to build other settings files upon.
 """
+import os
 from pathlib import Path
 
 import environ
 from django.utils.translation import gettext_lazy as _
+from django_storage_url import dsn_configured_storage_class
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # rattletest/
@@ -21,7 +23,7 @@ env.read_env(str(ROOT_DIR / ".env"))
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = env.bool("DJANGO_DEBUG", False)
+# DEBUG = os.environ.get("DJANGO_DEBUG",default=True)
 # Local time zone. Choices are
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # though not all of them may be available with every OS.
@@ -151,10 +153,16 @@ STATICFILES_FINDERS = [
 
 # MEDIA
 # ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-MEDIA_ROOT = str(APPS_DIR / "media")
-# https://docs.djangoproject.com/en/dev/ref/settings/#media-url
-MEDIA_URL = "/media/"
+MEDIA_URL = "media/"
+MEDIA_ROOT = os.path.join("/data/media/")
+
+DEFAULT_STORAGE_DSN = os.environ.get("DEFAULT_STORAGE_DSN")
+
+# dsn_configured_storage_class() requires the name of the setting
+DefaultStorageClass = dsn_configured_storage_class("DEFAULT_STORAGE_DSN")
+
+# Django's DEFAULT_FILE_STORAGE requires the class name
+DEFAULT_FILE_STORAGE = "config.settings.base.DefaultStorageClass"
 
 # TEMPLATES
 # ------------------------------------------------------------------------------
@@ -223,7 +231,7 @@ EMAIL_TIMEOUT = 5
 # ADMIN
 # ------------------------------------------------------------------------------
 # Django Admin URL.
-ADMIN_URL = "admin/"
+ADMIN_URL = os.environ.get("DJANGO_ADMIN_URL", default="adm1n/")
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [("""H D""", "hireshdqa06@gmail.com")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
@@ -277,8 +285,8 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         "APP": {
-            "client_id": env("CLIENT_ID_GITHUB"),
-            "secret": env("CLIENT_SECRET_GITHUB"),
+            "client_id": os.environ.get("CLIENT_ID_GITHUB", default="NA"),
+            "secret": os.environ.get("CLIENT_SECRET_GITHUB", default="NA"),
             "key": "",
         },
         # 'SCOPE': {
@@ -292,8 +300,8 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         "APP": {
-            "client_id": env("CLIENT_ID_GITHUB"),
-            "secret": env("CLIENT_SECRET_GITLAB"),
+            "client_id": os.environ.get("CLIENT_ID_GITLAB"),
+            "secret": os.environ.get("CLIENT_SECRET_GITLAB"),
             "key": "",
         }
     },
