@@ -11,14 +11,11 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 DJANGO_ALLOWED_HOSTS = [
     d.strip()
-    for d in os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
+    for d in os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",")
     if d.strip()
 ]
-# ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", default=["example.com"])
+
 ALLOWED_HOSTS = DJANGO_ALLOWED_HOSTS
-# ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["example.com"])
-# APPS_DIR = ROOT_DIR / "rattletest"
-
 
 # DATABASES
 # ------------------------------------------------------------------------------
@@ -28,14 +25,10 @@ ALLOWED_HOSTS = DJANGO_ALLOWED_HOSTS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-DATABASE_URL = os.environ.get('DATABASE_URL', 'sqlite://:memory:')
-DATABASES = {
-    'default': dj_database_url.parse(DATABASE_URL)
-    }
+DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite://:memory:")
+DATABASES = {"default": dj_database_url.parse(DATABASE_URL)}
 
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
-# DATABASES["default"] = os.environ.get("DATABASE_URL")  # noqa F405
-DATABASES["default"]["ATOMIC_REQUESTS"] = True  # noqa F405
 DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa F405
 
 # CACHES
@@ -123,7 +116,9 @@ EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 ANYMAIL = {
     "MAILGUN_API_KEY": os.environ.get("MAILGUN_API_KEY"),
     "MAILGUN_SENDER_DOMAIN": os.environ.get("MAILGUN_SENDER_DOMAIN"),
-    "MAILGUN_API_URL": os.environ.get("MAILGUN_API_URL", default="https://api.mailgun.net/v3"),
+    "MAILGUN_API_URL": os.environ.get(
+        "MAILGUN_API_URL", default="https://api.mailgun.net/v3"
+    ),
 }
 
 # ADMIN

@@ -4,7 +4,6 @@ Base settings to build other settings files upon.
 import os
 from pathlib import Path
 
-
 import environ
 from django.utils.translation import gettext_lazy as _
 from django_storage_url import dsn_configured_storage_class
@@ -154,16 +153,16 @@ STATICFILES_FINDERS = [
 
 # MEDIA
 # ------------------------------------------------------------------------------
-MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join('/data/media/')
+MEDIA_URL = "media/"
+MEDIA_ROOT = os.path.join("/data/media/")
 
-DEFAULT_STORAGE_DSN = os.environ.get('DEFAULT_STORAGE_DSN')
+DEFAULT_STORAGE_DSN = os.environ.get("DEFAULT_STORAGE_DSN")
 
 # dsn_configured_storage_class() requires the name of the setting
-DefaultStorageClass = dsn_configured_storage_class('DEFAULT_STORAGE_DSN')
+DefaultStorageClass = dsn_configured_storage_class("DEFAULT_STORAGE_DSN")
 
 # Django's DEFAULT_FILE_STORAGE requires the class name
-DEFAULT_FILE_STORAGE = 'config.settings.base.DefaultStorageClass'
+DEFAULT_FILE_STORAGE = "config.settings.base.DefaultStorageClass"
 
 # TEMPLATES
 # ------------------------------------------------------------------------------
