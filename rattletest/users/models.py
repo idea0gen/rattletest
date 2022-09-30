@@ -1,6 +1,7 @@
 import os
 
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models import CharField
 from django.urls import reverse
@@ -17,6 +18,14 @@ class User(AbstractUser):
     designation = models.CharField(max_length=255, blank=True)
     about_me = models.TextField(blank=True, null=True)
     avatar = models.ImageField(upload_to="avatars/", null=True, blank=True)
+    website = models.URLField(blank=True, null=True)
+    github_link = models.CharField(blank=True, null=True, max_length=50)
+    twitter_link = models.CharField(blank=True, null=True, max_length=50)
+    phoneNumberRegex = RegexValidator(regex=r"^\+?1?\d{8,15}$")
+    mobile_number = models.CharField(
+        validators=[phoneNumberRegex], max_length=16, unique=True, null=True, blank=True
+    )
+    address = models.CharField(blank=True, null=True, max_length=255)
 
     def get_absolute_url(self):
         """Get url for user's detail view.
