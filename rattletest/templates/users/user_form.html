@@ -14,7 +14,7 @@
           <div class="row">
             <div class="col-md-2">
               <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                <img class="rounded-circle mt-5" src="{% if user.avatar %} {{ user.avatar.url }} {% endif %}" width="90">
+                <img class="rounded-circle mt-5" alt="profile photo" src="{% if user.avatar %} {{ user.avatar.url }} {% endif %}" width="90">
                 <span class="font-weight-bold">{{user.username}}</span>
                 <span class="text-black-50">{{ user.email }}</span>
                 <span>{{user.designation}}</span></div>
@@ -35,10 +35,30 @@
               </div>
               <div class="form-group">
                 <label class="required form-label" for="id_designation">Designation</label>
-                <input type="text" name="designation" id="designation" class="form-control form-control-sm"required="" autofocus="" value="{{user.designation}}">
+                <input type="text" name="designation" id="designation" class="form-control form-control-sm" autofocus="" value="{{user.designation}}">
               </div>
               <div class="form-group">
-                <label for="id_avatar form-label" class="form-label">Avatar:  {% if user.avatar %}<a href="{{ user.avatar.url }}">{{ user.filename }}</a>{% endif %}</label>
+                <label class="form-label" for="id_website">Website</label>
+                <input type="text" name="website" id="designation" class="form-control form-control-sm" autofocus="" value="{{user.website|default_if_none:''}}">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="id_github_link">Github</label>
+                <input type="text" name="github_link" id="github_link" class="form-control form-control-sm" autofocus="" value="{{user.github_link|default_if_none:''}}">
+              </div>
+              <div class="form-group">
+                <label class="required form-label" for="id_twitter_link">Twitter</label>
+                <input type="text" name="twitter_link" id="twitter_link" class="form-control form-control-sm" autofocus="" value="{{user.twitter_link|default_if_none:''}}">
+              </div>
+              <div class="form-group">
+                <label class="required form-label" for="id_mobile_number">Mobile Number</label>
+                <input type="text" name="mobile_number" id="mobile_number" class="form-control form-control-sm" autofocus="" value="{{user.mobile_number|default_if_none:''}}">
+              </div>
+              <div class="form-group">
+                <label class="required form-label" for="id_address">Office Location</label>
+                <input type="text" name="address" id="address" class="form-control form-control-sm" autofocus="" value="{{user.address}}">
+              </div>
+              <div class="form-group">
+                <label for="id_avatar form-label-sm" class="form-label form-label-sm">Avatar:  {% if user.avatar %}<a href="{{ user.avatar.url }}">{{ user.filename }}</a>{% endif %}</label>
                 <input type="file" accept="image/*" name="avatar" id="id_avatar" class="form-control form-control-sm" value="{{ user.filename }}">
               </div>
               <div class="row mt-2">
