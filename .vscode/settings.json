@@ -4,4 +4,8 @@
     "python.formatting.provider": "black",
     "python.linting.pycodestyleEnabled": false,
     "python.linting.flake8Enabled": true,
+    "sonarlint.connectedMode.project": {
+        "connectionId": "rattletest",
+        "projectKey": "firebrick_rattletest"
+    },
 }
