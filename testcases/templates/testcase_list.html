@@ -10,7 +10,7 @@
     <div class="d-flex">
       <div class="d-flex style_buttons">
         <a id="create-suite-button" class="btn me-2 btn-success btn-xs" href="{% url 'new_testcase' project.id module.id %}">
-          <i class="fa fa-plus"></i> Test Case
+          <em class="fa fa-plus"></em> Test Case
         </a>
       </div>
       <div class="filters-block">
@@ -23,7 +23,8 @@
     </div>
   </div>
 
-  <table class="table projects-table mt-3 table-sm" cellspacing="0">
+  <table class="table projects-table mt-3 table-sm">
+    <caption></caption>
     <thead>
       <tr>
         <th class="sortable">ID</th>

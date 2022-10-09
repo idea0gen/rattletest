@@ -1,14 +1,13 @@
 import os
 
-from .base import *  # noqa
-from .base import ROOT_DIR, env
+from .base import INSTALLED_APPS, MIDDLEWARE, ROOT_DIR
 
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = os.environ.get("DJANGO_DEBUG", default=False)
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = env(
+SECRET_KEY = os.environ.get(
     "DJANGO_SECRET_KEY",
     default="9SXGn2jRxa4pstXJJbbJW6ZM5Nj1Zj6TQ6iF88NmhUBVXRYrqUUN7JTLQmZlZGvM",
 )
@@ -40,10 +39,10 @@ DATABASES["default"]["ATOMIC_REQUESTS"] = True
 # EMAIL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-EMAIL_BACKEND = env(
+EMAIL_BACKEND = os.environ.get(
     "DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend"
 )
-DEFAULT_FROM_EMAIL = env(
+DEFAULT_FROM_EMAIL = os.environ.get(
     "DJANGO_DEFAULT_FROM_EMAIL", default="rattletest <noreply@example.com>"
 )
 

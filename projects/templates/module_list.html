@@ -15,7 +15,7 @@
         </h4>
         <div class="dropdown">
           <a class="btn btn-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
-              <i class="fa fa-ellipsis-h"></i>
+              <em class="fa fa-ellipsis-h"></em>
           </a>
           <div class="dropdown-menu dropdown-menu-end">
               <div class="dropdown-item"><a href="{% url 'project_edit' project.id %}">Edit</a></div>
@@ -27,7 +27,7 @@
       <div class="d-flex">
         <div class="d-flex style_buttons">
           <a id="create-suite-button" class="btn me-2 btn-success btn-xs" href="{% url 'new_module' project.id %}">
-            <i class="fa fa-plus"></i> Module
+            <em class="fa fa-plus"></em> Module
           </a>
         </div>
         <div class="filters-block">
@@ -41,6 +41,7 @@
     </div>
     <div class="container-fluid row px-3 pt-3 pb-3">
         <table class="table table-sm container-fluid">
+          <caption></caption>
             <thead>
                 <tr>
                     <th scope="col">Project Code</th>
