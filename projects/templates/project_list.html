@@ -12,7 +12,7 @@
     <div class="d-flex">
       <div class="d-flex style_buttons">
         <a id="create-suite-button" class="btn me-2 btn-success btn-xs" href="{% url 'new_project' %}">
-          <i class="fa fa-plus"></i> Project
+          <em class="fa fa-plus"></em> Project
         </a>
       </div>
       <div class="filters-block">
@@ -24,7 +24,7 @@
       </div>
     </div>
   </div>
-  <table class="table projects-table mt-3" cellspacing="0">
+  <table class="table projects-table mt-3" aria-describedby="project-list">
     <thead>
       <tr>
         <th></th>
@@ -58,7 +58,7 @@
               </span>
             </div>
           </td>
-          <td class="hidden-xs"><i class="green fa fa-check"></i> No open defects</td>
+          <td class="hidden-xs"><em class="green fa fa-check"></em> No open defects</td>
           <td class="hidden-xs">No test runs</td>
           <td class="hidden-xs">No milestones</td>
           <td class="hidden-xs">
@@ -85,7 +85,7 @@
             <td class="text-end">
               <div class="dropdown">
                 <a class="btn btn-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
-                  <i class="fa fa-ellipsis-h"></i>
+                  <em class="fa fa-ellipsis-h"></em>
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-end">
@@ -93,7 +93,7 @@
 
                   <div class="dropdown-item">
                     <a class="delete-icon" id="{{project.id}}" onclick='deleteProject({{ project.id }})''>Delete</a>
-                  <!-- <a class="text-danger" href="{% url 'project_delete' project.id %}">Delete</a></div> -->
+                  </div>
                 </div>
               </div>
             </td>

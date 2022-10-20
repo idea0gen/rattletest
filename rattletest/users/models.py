@@ -9,6 +9,12 @@ from django.utils.translation import gettext_lazy as _
 
 
 class User(AbstractUser):
+
+    def user_profile_avatar_path(self, instance):
+        print("deleting file", self.avatar.delete)
+        ext = instance.split('.')[-1]
+        return '{0}/avatars/profile.{1}'.format(self.username, ext)
+
     """Default user for rattletest."""
 
     #: First and last name do not cover name patterns around the globe
@@ -17,7 +23,7 @@ class User(AbstractUser):
     last_name = None  # type: ignore
     designation = models.CharField(max_length=255, blank=True)
     about_me = models.TextField(blank=True, null=True)
-    avatar = models.ImageField(upload_to="avatars/", null=True, blank=True)
+    avatar = models.ImageField(upload_to=user_profile_avatar_path, null=True, blank=True)
     website = models.URLField(blank=True, null=True)
     github_link = models.CharField(blank=True, null=True, max_length=50)
     twitter_link = models.CharField(blank=True, null=True, max_length=50)
