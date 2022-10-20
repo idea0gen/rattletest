@@ -29,7 +29,7 @@ class ProjectCreate(LoginRequiredMixin, CreateView):
 class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Project
     fields = ["name", "project_code", "description", "members", "owner"]
-    template_name = "project_update_form.html"
+    template_name = "project_form.html"
 
     def form_valid(self, form):
         project = form.save(commit=False)
@@ -60,10 +60,6 @@ class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         if self.request.user == self.get_object().owner:
             return True
         return False
-        # members = self.get_object().members.all()
-        # if members.contains(self.request.user):
-        #     return True
-        # return False
 
 
 class ProjectListView(LoginRequiredMixin, ListView):
@@ -90,7 +86,6 @@ class ProjectDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         payload = {"status": "success", "message": "Project deleted successfully"}
 
         return JsonResponse(payload)
-        # return redirect("projects")
 
     def test_func(self):
         project = self.get_object()
@@ -105,7 +100,6 @@ class ProjectDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             "status": "fail",
             "message": "You do not have permission, please ask the owner of project to delete",
         }
-        # return redirect("project")
         return JsonResponse(payload)
 
 
@@ -147,7 +141,7 @@ class ModuleUpdateView(LoginRequiredMixin, UpdateView):
     fields = [
         "name",
     ]
-    template_name = "module_update_form.html"
+    template_name = "module_form.html"
 
     def form_valid(self, form):
         module = form.save(commit=False)

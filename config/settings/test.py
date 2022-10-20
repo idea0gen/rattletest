@@ -2,8 +2,6 @@
 With these settings, tests run faster.
 """
 
-# from config.settings.local import ALLOWED_HOSTS
-
 from .base import *  # noqa
 from .base import ROOT_DIR, env
 

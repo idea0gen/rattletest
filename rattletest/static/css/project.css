@@ -171,7 +171,7 @@ table.projects-table .project-row td {
   position: relative;
 }
 
-style_button {
+.style_button {
   border-radius: 6px;
   border: none;
   outline: none;
