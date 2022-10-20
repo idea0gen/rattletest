@@ -81,7 +81,6 @@ class TestCaseCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["projects"] = Project.objects.all()
-        # context["module"] = Module.objects.filter(id=self.kwargs["module_id"])
         context["modules"] = Module.objects.all()
         context["project"] = Project.objects.get(id=self.kwargs["project_id"])
         context["module"] = Module.objects.get(id=self.kwargs["module_id"])
@@ -103,6 +102,7 @@ class TestCaseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         "project",
         "module",
     ]
+    template_name = "testcase_form.html"
 
     def get_object(self, queryset=None):
         if queryset is None:
@@ -135,7 +135,7 @@ class TestCaseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         project = Project.objects.get(id=self.kwargs["project_id"])
-        user_projects = self.request.user.members.all()
+        user_projects = self.request.user.projects.all()
         if project in user_projects:
             return True
         return False
@@ -158,8 +158,6 @@ class TestCaseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form))
-
-    template_name = "testcase_form.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

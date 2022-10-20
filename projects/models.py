@@ -19,7 +19,7 @@ class Project(models.Model):
         related_name="project_created_by",
         on_delete=models.PROTECT,
     )
-    members = models.ManyToManyField(User, related_name="projects")
+    members = models.ManyToManyField(User, related_name="projects", blank=True)
 
     class Meta:
         ordering = ["-updated_date"]
