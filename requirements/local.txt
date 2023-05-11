@@ -1,6 +1,6 @@
 -r base.txt
 
-Werkzeug==2.1.1 # https://github.com/pallets/werkzeug
+Werkzeug==2.2.3 # https://github.com/pallets/werkzeug
 ipdb==0.13.9  # https://github.com/gotcha/ipdb
 django-sslserver==0.22 # https://github.com/teddziuba/django-sslserver
 # Testing
