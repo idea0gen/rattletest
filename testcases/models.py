@@ -31,7 +31,6 @@ def get_deleted_user_instance():
 
 
 class TestCase(models.Model):
-
     created_by = models.ForeignKey(
         User,
         related_name="tc_created_by",
