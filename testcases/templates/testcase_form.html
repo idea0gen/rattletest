@@ -66,8 +66,8 @@
                       <div class="form-group">
                         <label class="required form-label" for="id_testcase_type">Test Case Type</label>
                         <select class="form-select form-select-sm form-control form-control-sm" name="testcase_type" id="id_testcase_type" aria-label=".form-select-sm example">
-                            {% for a in form.testcase_type %}
-                              {{value}}
+                            {% for tc_type in form.testcase_type %}
+                              {{ tc_type }}
                             {% endfor %}
                         </select>
                       </div>
