@@ -4,4 +4,4 @@ COPY . /app
 RUN pip install -r requirements/production.txt
 # RUN python manage.py migrate
 RUN python manage.py collectstatic --noinput
-CMD uwsgi --http=0.0.0.0:80 --module=config.wsgi
+CMD python manage.py migrate && uwsgi --http=0.0.0.0:80 --module=config.wsgi
