@@ -28,3 +28,4 @@ django-coverage-plugin==2.0.2  # https://github.com/nedbat/django_coverage_plugi
 pytest-django==4.5.2  # https://github.com/pytest-dev/pytest-django
 django-debug-toolbar==3.2.4  # https://github.com/jazzband/django-debug-toolbar
 ipython>=8.10.0 # not directly required, pinned by Snyk to avoid a vulnerability
+sqlparse>=0.5.0 # not directly required, pinned by Snyk to avoid a vulnerability
