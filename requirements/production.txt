@@ -8,5 +8,5 @@ uwsgi==2.0.22 # https://github.com/unbit/uwsgi
 # Django
 # ------------------------------------------------------------------------------
 psycopg2==2.9.3 # https://github.com/psycopg/psycopg2/
-setuptools>=70.0.0 # not directly required, pinned by Snyk to avoid a vulnerability
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
 zipp>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
