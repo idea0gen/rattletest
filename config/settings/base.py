@@ -6,7 +6,6 @@ from pathlib import Path
 
 import environ
 from django.utils.translation import gettext_lazy as _
-from django_storage_url import dsn_configured_storage_class
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # rattletest/
@@ -65,6 +64,8 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     "crispy_forms",
     "allauth",
+    "allauth.account",
+    'allauth.socialaccount',
     "allauth.socialaccount.providers.github",
     "allauth.socialaccount.providers.gitlab",
     "anymail",
@@ -72,8 +73,6 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "rattletest.users.apps.UsersConfig",
-    "rattletest.users.apps.ModifiedAccountConfig",
-    "rattletest.users.apps.ModifiedSocialAccountConfig",
     "projects",
     "testcases",
 ]
@@ -133,6 +132,9 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.common.BrokenLinkEmailsMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
+    # Add the account middleware:
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 # STATIC
@@ -154,13 +156,6 @@ STATICFILES_FINDERS = [
 MEDIA_URL = "media/"
 MEDIA_ROOT = os.path.join("/data/media/")
 
-DEFAULT_STORAGE_DSN = os.environ.get("DEFAULT_STORAGE_DSN")
-
-# dsn_configured_storage_class() requires the name of the setting
-DefaultStorageClass = dsn_configured_storage_class("DEFAULT_STORAGE_DSN")
-
-# Django's DEFAULT_FILE_STORAGE requires the class name
-DEFAULT_FILE_STORAGE = "config.settings.base.DefaultStorageClass"
 
 # TEMPLATES
 # ------------------------------------------------------------------------------

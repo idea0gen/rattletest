@@ -6,10 +6,10 @@ whitenoise==6.0.0  # https://github.com/evansd/whitenoise
 
 # Django
 # ------------------------------------------------------------------------------
-django==4.2.14  # pyup: < 3.2  # https://www.djangoproject.com/
+django==5.1  # pyup: < 3.2  # https://www.djangoproject.com/
 django-environ==0.8.1  # https://github.com/joke2k/django-environ
 django-model-utils==4.2.0  # https://github.com/jazzband/django-model-utils
-django-allauth==0.63.3  # https://github.com/pennersr/django-allauth
+django-allauth==64.0.0  # https://github.com/pennersr/django-allauth
 django-crispy-forms==1.14.0  # https://github.com/django-crispy-forms/django-crispy-forms
 django-anymail[mailgun]==8.5  # https://github.com/anymail/django-anymail
 dj_database_url==1.0.0 # https://github.com/jazzband/dj-database-url
